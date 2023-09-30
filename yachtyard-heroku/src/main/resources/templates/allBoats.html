@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Yacht Yard</title>
+
+    <!-- bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+    body {
+	background: url(https://c4.wallpaperflare.com/wallpaper/258/679/608/nature-landscape-guatemala-south-america-wallpaper-preview.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+
+    }
+    	</style>
+</head>
+<body>
+<div class="container">
+
+<h1 th:text="${title}"></h1>
+<p> 
+<a class="btn btn-primary" th:href="@{/boats/newBoat}">New Item</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Length(ft)</th>
+            <th>Description</th>
+            <th>Price(UDS)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="boat : ${boats}">
+            <td th:text="${boat.brand}">Brand</td>
+            <td th:text="${boat.model}">Model</td>
+            <td th:text="${boat.length}">Length</td>
+            <td th:text="${boat.description}">Description</td>
+            <td th:text="${boat.price}">Price</td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/boats/editBoat/{id}(id=${boat.id})}">Edit</a>
+                <a class="btn btn-danger" th:href="@{/boats/deleteBoat/{id}(id=${boat.id})}">Delete</a>
+                <a class="btn btn-info" th:href="@{/boats/oneBoat/{id}(id=${boat.id})}">Show</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
