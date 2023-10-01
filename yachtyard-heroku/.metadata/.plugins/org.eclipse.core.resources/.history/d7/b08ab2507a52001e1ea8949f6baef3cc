@@ -1,0 +1,120 @@
+package com.yacht.data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Service;
+
+import com.yacht.model.BoatEntity;
+import com.yacht.model.BoatModel;
+
+
+
+@Service
+public class BoatRepository implements DataAccessInterface<BoatModel>{
+	
+	@Autowired
+	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplateObject;
+	
+	/**
+	 * Non-Default constructor for injection
+	 */
+	public BoatRepository(DataSource dataSource)
+	{
+		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	}
+	
+	
+	public List<BoatModel> findAll() {
+		
+		String sql = "SELECT * FROM boats";
+		List<BoatModel> boats = new ArrayList<BoatModel>();
+		try
+		{
+			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql);
+			while(srs.next())
+			{
+				boats.add(new BoatModel(srs.getInt("id"), srs.getString("brand"), srs.getString("model"), srs.getInt("length"), srs.getString("description"), srs.getDouble("price"), srs.getString("img")));
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return boats;
+	}
+	
+	public BoatModel getById(int id) {
+		
+		String sql = "SElECT * FROM boats WHERE id LIKE " + id;
+		BoatModel boat = new BoatModel();
+
+		try
+		{
+			SqlRowSet  srs =jdbcTemplateObject.queryForRowSet(sql);
+			while(srs.next())
+			{
+				boat = (new BoatModel(srs.getInt("id"), srs.getString("brand"), srs.getString("model"), srs.getInt("length"), srs.getString("description"), srs.getDouble("price"), srs.getString("img")));
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return boat;
+	}
+
+
+	@Override
+	public BoatModel create(BoatModel boat)
+	{
+		String sql = String.format("INSERT INTO boats(`brand`, `model`, `length`, `description`, `price`, `img`) VALUES (%s,%s,%d,%s,%f, %s)", boat.getBrand(), boat.getModel(), boat.getLength(), boat.getDescription(), boat.getPrice(), boat.getImg());
+
+		BoatModel newBoat = new BoatModel();
+		try
+		{
+			jdbcTemplateObject.execute(sql);
+		}
+		catch(Exception e )
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return newBoat;
+	}
+
+	@Override
+	public BoatModel update(BoatModel item) {
+		
+		return null;
+	}
+
+	@Override
+	public boolean deleteById(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	public BoatEntity save(BoatEntity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterable<BoatModel> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
