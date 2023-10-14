@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="container">
-
+    <h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
 <h1 th:text="${title}"></h1>
 <p> 
 <a class="btn btn-primary" th:href="@{/boats/newBoat}">New Item</a>

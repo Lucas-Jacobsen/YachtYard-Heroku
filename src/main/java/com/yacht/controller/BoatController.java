@@ -16,9 +16,14 @@ import com.yacht.model.BoatModel;
 
 
 @Controller
-@RequestMapping("/boats")
+@RequestMapping("/")
 public class BoatController
 {
+	@GetMapping("/login")
+    public String login() {
+		
+        return "login"; // Assuming "login.html" is in resources/templates.
+    }
 	//dependency injection for repository
 	@Autowired
 	private BoatDataService boatDataService;
@@ -31,7 +36,7 @@ public class BoatController
 	
 	//Endpoint methods 
 	
-	@GetMapping("")
+	@GetMapping("/boats")
 	public String showAllBoats(Model model)
 	{
 		model.addAttribute("boats", boatDataService.getAll());
@@ -40,7 +45,7 @@ public class BoatController
 
 	}
 	
-	@GetMapping("/oneBoat/{id}")
+	@GetMapping("boats/oneBoat/{id}")
 	public String showOneBoat(@PathVariable("id") int id, Model model)
 	{
 		model.addAttribute("boat", boatDataService.getById(id));
@@ -49,7 +54,7 @@ public class BoatController
 		return "oneBoat";
 	}
 	
-	@GetMapping("/editBoat/{id}")
+	@GetMapping("/boats/editBoat/{id}")
 	public String editBoat(@PathVariable("id") int id, Model model)
 	{
 		model.addAttribute("boat", boatDataService.getById(id));
@@ -57,7 +62,7 @@ public class BoatController
 		return "editBoat";
 	}
 	
-	@GetMapping("/processEdit")
+	@GetMapping("/boats/processEdit")
 	public String doUpdate(BoatModel boatModel, BindingResult br, Model model)
 	{
 		boatDataService.update(boatModel);
@@ -65,7 +70,7 @@ public class BoatController
 	}
 	
 	
-	@GetMapping("/newBoat")
+	@GetMapping("/boats/newBoat")
 	public String NewBoat(Model model)
 	{
 		model.addAttribute("boat", new BoatModel());
@@ -74,7 +79,7 @@ public class BoatController
 	}
 	
 
-	@PostMapping("/processCreate")
+	@PostMapping("/boats/processCreate")
 	public String doCreate(@Valid BoatModel boatModel, BindingResult br, Model model)
 	{
 		if(br.hasErrors())
@@ -86,7 +91,7 @@ public class BoatController
 		return "redirect:/boats";
 	}
 	
-	@GetMapping("/deleteBoat/{id}")
+	@GetMapping("/boats/deleteBoat/{id}")
 	public String deleteBoat(@PathVariable("id") int id, Model model)
 	{
 		boatDataService.deleteById(id);
