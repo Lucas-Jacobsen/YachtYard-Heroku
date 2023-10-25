@@ -2,6 +2,7 @@ package com.yacht.controller;
 
 import javax.validation.Valid;
 
+import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,30 +13,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yacht.data.BoatDataService;
+import com.yacht.data.UserDataService;
 import com.yacht.model.BoatModel;
+import com.yacht.model.UserModel;
 
 
 @Controller
 @RequestMapping("/")
 public class BoatController
 {
+	
+	//dependency injection for repository
+	@Autowired
+	private BoatDataService boatDataService;
+	private UserDataService userDataService;
+	
+	//constructor injection to inject repository
+	public BoatController(BoatDataService boatDataService, UserDataService userDataService)
+	{
+		this.boatDataService = boatDataService;
+		this.userDataService = userDataService;
+		
+	}
+	
+	//Endpoint methods 
+	
 	@GetMapping("/login")
     public String login() {
 		
         return "login"; // Assuming "login.html" is in resources/templates.
     }
-	//dependency injection for repository
-	@Autowired
-	private BoatDataService boatDataService;
-	
-	//constructor injection to inject repository
-	public BoatController(BoatDataService boatDataService)
-	{
-		this.boatDataService = boatDataService;
-	}
-	
-	//Endpoint methods 
-	
+	@GetMapping("/signup")
+    public String signup(Model model) {
+		
+		model.addAttribute("user", new UserModel());
+        return "signup"; // Assuming "login.html" is in resources/templates.
+    }
+	@PostMapping("/doSignup")
+    public String doSignup( @Valid UserModel newUser, BindingResult br, Model model) {
+		
+			if(br.hasErrors())
+		{
+			model.addAttribute("title", "New Boat");
+			return "createBoat";
+		}
+		System.out.printf("IN CONTROLLER: id: %d\nusername: %s\npassword: %s\nrole: %s\nEnables: %d" ,newUser.getId(), newUser.getUsername(), newUser.getPassword(), newUser.getRole(), newUser.getEnabled());
+		userDataService.create(newUser);
+		return "redirect:/login";
+    }
 	@GetMapping("/boats")
 	public String showAllBoats(Model model)
 	{

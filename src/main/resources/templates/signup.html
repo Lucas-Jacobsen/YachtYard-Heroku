@@ -78,38 +78,31 @@
 <body>
     <div id="pageContent">
         <div class="large-text">
-            <strong>Welcome to YachtYard</strong>
+            <strong>Register for YachtYard</strong>
         </div>
         <div class="d-flex align-items-center h-100">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-xs-12 ms-auto">
                         <div class="bg-white rounded shadow-lg">
-                            <h1 class="text-center h5 pt-5 pb-3"><strong>LOGIN</strong></h1>
-                            <form class="py-2"  th:action="@{/login}" method="post">
+                            <h1 class="text-center h5 pt-5 pb-3"><strong>Register</strong></h1>
+                            <form class="py-2"  th:action="@{/doSignup}" method="post" th:object = "${user}">
                                 <div class="position-relative maxWidth320 px-2">
                                     <div class="inlineLogo"><i class="text-accent fas fa-at"></i></div>
                                     <label for="username">Username</label>
-                                    <input type="text" id="username" name="username" class="form-control" />
+                                    <input type="text" id="username" th:field="*{username}" placeholder="Enter Username" class="form-control" />
                                 </div>
                                 <div class="position-relative maxWidth320 px-2">
                                     <div class="inlineLogo"><i class="text-accent fas fa-key"></i></div>
                                     <label for="password">Password</label>
-                                    <input type="password" id="password" name="password" class="form-control" />
+                                    <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" class="form-control" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div id="submitBtn" class="text-center">
-                                    <button type="submit" value="Login" class="btn w-50 btn-lg shadow-sm rounded-pill">Login</button>
+                                    <button type="submit" value="Login" class="btn w-50 btn-lg shadow-sm rounded-pill">Register</button>
                                 </div>
                             </form>
-                            <div class="text-center pb-4">
-                                Don't have an account? 
-                                <form th:action="@{/signup}" method="get">
-                                    <div id="submitBtn" class="text-center">
-                                        <button class="btn w-50 btn-lg shadow-sm rounded-pill">Register</button>
-                                    </div>
-                                </form>
-                            </div>
+                           
                         </div>
                         <div class="p-2 mx-2 rounded-bottom shadow bg-accent border-bottom border-dark"></div>
                         <div class="p-1 mx-3 rounded-bottom shadow bg-accent"></div>
