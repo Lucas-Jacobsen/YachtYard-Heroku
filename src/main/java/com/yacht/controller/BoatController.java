@@ -22,7 +22,6 @@ import com.yacht.model.UserModel;
 @RequestMapping("/")
 public class BoatController
 {
-	
 	//dependency injection for repository
 	@Autowired
 	private BoatDataService boatDataService;
@@ -37,6 +36,11 @@ public class BoatController
 	}
 	
 	//Endpoint methods 
+
+	@GetMapping("/")
+    public String root() {
+        return "login"; 
+    }
 	
 	@GetMapping("/login")
     public String login() {
