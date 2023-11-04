@@ -11,6 +11,7 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 public class YachtyardApplication {
 
 	public static void main(String[] args) {
+        System.out.println("hello logs");
 
 		SpringApplication.run(YachtyardApplication.class, args);
 	}
