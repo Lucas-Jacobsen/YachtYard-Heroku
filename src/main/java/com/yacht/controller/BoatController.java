@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.yacht.data.BoatDataService;
 import com.yacht.data.UserDataService;
 import com.yacht.model.BoatModel;
@@ -26,6 +29,7 @@ public class BoatController
 	@Autowired
 	private BoatDataService boatDataService;
 	private UserDataService userDataService;
+	Logger logger = LoggerFactory.getLogger((BoatController.class));
 	
 	//constructor injection to inject repository
 	public BoatController(BoatDataService boatDataService, UserDataService userDataService)
@@ -45,7 +49,7 @@ public class BoatController
 	@GetMapping("/login")
     public String login() {
 		
-        return "login"; // Assuming "login.html" is in resources/templates.
+        return "login"; 
     }
 	@GetMapping("/signup")
     public String signup(Model model) {
@@ -68,6 +72,8 @@ public class BoatController
 	@GetMapping("/boats")
 	public String showAllBoats(Model model)
 	{
+		logger.info("Entering BoatController.showAllBoats");
+
 		model.addAttribute("boats", boatDataService.getAll());
 		model.addAttribute("title", "All Boats");	
 		return "allBoats";
