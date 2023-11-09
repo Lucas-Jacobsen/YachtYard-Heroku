@@ -15,7 +15,7 @@
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n" />
         </Layout>
     </appender>
-    <logger name="edu.gcu" additivity="false">
+    <logger name="com.yacht" additivity="false">
         <level value="INFO" />
         <appender-ref ref="console" />
         <appender-ref ref="file" />
@@ -26,3 +26,4 @@
         <appender-ref ref="file" />
     </root>
 </log4j:configuration>
+
