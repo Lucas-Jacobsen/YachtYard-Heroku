@@ -48,18 +48,24 @@ public class BoatController
 	
 	@GetMapping("/login")
     public String login() {
-		
+
+				logger.info("Entering BoatController.login");
+
         return "login"; 
     }
 	@GetMapping("/signup")
     public String signup(Model model) {
 		
+				logger.info("Entering BoatController.signup");
+
 		model.addAttribute("user", new UserModel());
         return "signup"; // Assuming "login.html" is in resources/templates.
     }
 	@PostMapping("/doSignup")
     public String doSignup( @Valid UserModel newUser, BindingResult br, Model model) {
 		
+				logger.info("Entering BoatController.doSignup");
+
 			if(br.hasErrors())
 		{
 			model.addAttribute("title", "New Boat");
@@ -83,6 +89,8 @@ public class BoatController
 	@GetMapping("boats/oneBoat/{id}")
 	public String showOneBoat(@PathVariable("id") int id, Model model)
 	{
+				logger.info("Entering BoatController.showOneBoat");
+
 		model.addAttribute("boat", boatDataService.getById(id));
 		model.addAttribute("title", "One Boat");
 		
@@ -92,6 +100,9 @@ public class BoatController
 	@GetMapping("/boats/editBoat/{id}")
 	public String editBoat(@PathVariable("id") int id, Model model)
 	{
+
+				logger.info("Entering BoatController.editBoat");
+
 		model.addAttribute("boat", boatDataService.getById(id));
 		model.addAttribute("title", "Edit Boat");
 		return "editBoat";
@@ -100,6 +111,8 @@ public class BoatController
 	@GetMapping("/boats/processEdit")
 	public String doUpdate(BoatModel boatModel, BindingResult br, Model model)
 	{
+		logger.info("Entering BoatController.processEdit");
+
 		boatDataService.update(boatModel);
 		return "redirect:/boats";
 	}
@@ -108,6 +121,8 @@ public class BoatController
 	@GetMapping("/boats/newBoat")
 	public String NewBoat(Model model)
 	{
+		logger.info("Entering BoatController.newBoat");
+
 		model.addAttribute("boat", new BoatModel());
 		model.addAttribute("title", "New Boat");
 		return "createBoat";
@@ -116,7 +131,9 @@ public class BoatController
 
 	@PostMapping("/boats/processCreate")
 	public String doCreate(@Valid BoatModel boatModel, BindingResult br, Model model)
-	{
+	{		
+		logger.info("Entering BoatController.doCreate");
+
 		if(br.hasErrors())
 		{
 			model.addAttribute("title", "New Boat");
@@ -129,6 +146,8 @@ public class BoatController
 	@GetMapping("/boats/deleteBoat/{id}")
 	public String deleteBoat(@PathVariable("id") int id, Model model)
 	{
+		logger.info("Entering BoatController.deleteBoat");
+
 		boatDataService.deleteById(id);
 		return "redirect:/boats";
 	}
