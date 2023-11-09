@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -20,6 +22,7 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 	@Autowired
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
+	Logger logger = LoggerFactory.getLogger((BoatRepository.class));
 	
 	/**
 	 * Non-Default constructor for injection
@@ -32,6 +35,7 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 	
 	
 	public List<BoatModel> findAll() {
+		logger.info("Entering BoatRepository.findAll");
 		
 		String sql = "SELECT * FROM boats";
 		List<BoatModel> boats = new ArrayList<BoatModel>();
@@ -53,6 +57,7 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 	}
 	 
 	public BoatModel getById(int id) {
+		logger.info("Entering BoatRepository.getByID");
 		
 		String sql = "SElECT * FROM boats WHERE id LIKE " + id;
 		BoatModel boat = new BoatModel();
@@ -77,6 +82,8 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 	@Override
 	public BoatModel create(BoatModel boat)
 	{
+		logger.info("Entering BoatRepository.create");
+
 		String sql = String.format("INSERT INTO boats(`brand`, `model`, `length`, `description`, `price`, `img`) VALUES ('%s','%s',%d,'%s',%f, '%s')", boat.getBrand(), boat.getModel(), boat.getLength(), boat.getDescription(), boat.getPrice(), boat.getImg());
 
 		BoatModel newBoat = new BoatModel();
@@ -96,6 +103,8 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 	@Override
 	public BoatModel update(BoatModel item) {
 		
+		logger.info("Entering BoatRepository.update");
+
 		String sql = String.format("UPDATE boats SET `brand`='%s',`model`='%s',`length` = %d,`description`='%s',`price`=%f , `img`='%s' WHERE `id` = " + item.getId(), item.getBrand(), item.getModel(), item.getLength(), item.getDescription(), item.getPrice(),item.getImg());
 		try
 		{
@@ -112,6 +121,7 @@ public class BoatRepository implements DataAccessInterface<BoatModel>{
 
 	@Override
 	public boolean deleteById(int id) {
+		logger.info("Entering BoatRepository.deleteById");
 		String sql = "Delete FROM `boats` WHERE `id` = " + id;
 		try
 		{

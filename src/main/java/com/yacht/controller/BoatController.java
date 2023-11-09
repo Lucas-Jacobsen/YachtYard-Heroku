@@ -49,7 +49,7 @@ public class BoatController
 	@GetMapping("/login")
     public String login() {
 
-				logger.info("Entering BoatController.login");
+		logger.info("Entering BoatController.login");
 
         return "login"; 
     }
